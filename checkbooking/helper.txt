@@ -1,0 +1,79 @@
+<?php
+                                            $sql="Select * from ib_bookcabs where status=0 order by bookingid desc;";
+                                            $booking = mysqli_query($conn,$sql);
+                                            while($bk=mysqli_fetch_array($booking))
+                                            {	
+                                        ?>
+                                            <tr>
+                                                <td><?php echo $bk[0];?></td>
+                                                <td><?php echo $bk[6]." (".$bk[8].")";?></td>
+                                                <td>
+                                                    <?php 
+                                                        if($bk[3]==1)echo  "Airport Pickup"; 
+                                                        elseif($bk[3]==2)echo "Airport Drop";
+                                                        elseif($bk[3]==3)
+                                                        {   
+                                                            $sqlpack="SELECT * from `ib_ratewalkin` where hr='$bk[4]' and cartype='$bk[9]'";
+										                    $packlist = mysqli_query($conn,$sqlpack);
+										                    $pack=mysqli_fetch_array($packlist);
+
+                                                            echo "Local Rental (".$pack[1]."hr/".$pack[2]."km)";
+                                                        }
+                                                        elseif($bk[3]==4)echo "Outstation (".$bk[7].")";
+                                                    ?>
+                                                </td>
+                                                <td><?php echo $bk[1];?></td>
+                                                <td><?php echo $bk[2];?></td>
+                                                <td><?php echo $bk[5];?></td>
+                                                <td><?php echo $bk[9];?></td>
+                                                <td> <i class="fa fa-check-circle" style='color:green' id='<?php echo 'accept'.$bk[0];?>'></i>
+                                                            &nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp; 
+                                                     <i class="fa fa-times-circle" style='color:red' id='<?php echo 'reject'.$bk[0];?>'></i>
+                                                </td>
+                                            <?php
+                                                }
+                                            ?>
+                                            </tr>
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+  function loaddata(){
+            $.ajax({
+                type:"get",
+                url:'api/newduty.php',
+                data:{},
+                success:function(resp)
+                {   
+                    var jsonData=JSON.parse(resp);
+                    if(jsonData.success=='1')
+                    {
+                        setTimeout(function(){
+                            var result = jsonData.result;
+                            var html = '';
+                            
+                            for(var i=0;i < result.length; i++) {
+                                html += '<tr><td>'+result[i].bookingid+'</td>'
+                                        +'<td>'+result[i].reportdate+'('+result[i].reporttime+')</td>'
+                                        +'<td>'+result[i].dutytype+'</td>'    
+                                        +'<td>'+result[i].name+'</td>'     
+                                        +'<td>'+result[i].contact+'</td>'    
+                                        +'<td>'+result[i].location+'</td>'    
+                                        +'<td>'+result[i].car+'</td>' 
+                                        +'<td> <i class="fa fa-check-circle" style="color:green" id="accept'+result[i].bookingid+'"></i>'
+                                        +'&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;'
+                                        +'<i class="fa fa-times-circle" style="color:red" id="'+result[i].bookingid+'"></i></td></tr>'
+                                                                                    
+                                
+                            }
+                        },9000);
+
+                        $('#newduty').html(html);
+                    }
+                }
+            })
+    
+    };
+
+    
