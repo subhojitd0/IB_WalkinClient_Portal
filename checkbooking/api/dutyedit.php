@@ -103,11 +103,31 @@ if($state==1)
 
 
     $sql="Update `ib_bookcabs` Set `driver`='$driver', `carno`='$car',`carallocate`='$c[3]' where `bookingid`=$id";
-    echo $sql;
+    
 
 	if(mysqli_query($conn,$sql))
     {
-        echo json_encode(array('success' => 1, 'sql'=>$sql));
+
+        $sqld="Select * from `ib_bookcabs` where `bookingid`='$id'";
+        $duty = mysqli_query($conn,$sqld);
+	    if($d=mysqli_fetch_array($duty))
+        {
+            $sqldr="SELECT * from `ib_driver` where drivername='$d[11]'";
+            $driver = mysqli_query($conn,$sqldr);
+	        if($dr=mysqli_fetch_array($driver))
+            {
+
+                echo json_encode(array('success' => 1, 
+                                    'id'=>$d[0], 
+                                    'contact'=>$d[2],
+                                    'car'=>$d[12],
+                                    'driver'=>$d[11],
+                                    'drivercontact'=>$dr[5],
+                                    'repdate'=>$d[6],
+                                    'reptime'=>$d[8],
+                                    'location'=>$d[5]));
+            }
+         }
     }
     else
     {

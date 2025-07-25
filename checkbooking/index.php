@@ -502,7 +502,25 @@ if($_SESSION['user']=='')
                             var jsonData=JSON.parse(resp);
                             if(jsonData.success=='1')
                             {
+                                
+
+                                var msg="Booking ID <?php echo $bk[0];?> Confirmed for Passenger <?php echo $bk[1];?> for Date <?php echo $bk[6];?> at <?php echo $bk[8];?> .Vehicle to be assigned .Vehicle and driver details will be send to you before the pickup time. Regards IB CABS. TEL: 033 24246551. Mob: 9830800776";
+                                var pass='Admin@321';
+                                
+                                $.ajax({
+                                    type:"get",
+                                    url:'https://enterprise.smsgupshup.com/GatewayAPI/rest',
+                                    data:{userid:'2000153152', password:pass, send_to:<?php echo $bk[2];?>, method:'SendMessage',msg:msg, msg_type:'TEXT', auth_scheme:'plain', v:'1.1', format:'text'},
+                                    statusCode: {
+                                        200: function(response) {
+                                            alert('Message Sent Successfully');
+                                        }
+                                    }
+                                });
+
+                                alert('Status Updated Correctly');
                                 location.reload();
+                                //setTimeout(function() {location.reload();},3000);
                             }
                             else
                             {
@@ -691,12 +709,24 @@ if($_SESSION['user']=='')
                     var jsonData=JSON.parse(resp);
                     if(jsonData.success=='1')
                     {
-                        alert('Updated');
+                        var msg2="Dear Customer, Thanks for choosing IB CABS. Your updated booking Details are : Booking ID "+id+". Vehicle "+car+", Driver Name "+driver+", Driver Contact Number : "+jsonData.drivercontact +", will report at Date "+jsonData.repdate+" at "+jsonData.reptime+" Reporting Address "+jsonData.location+" Regards IB CABS TEL: 033 24246551, Mob: 9830800776";
+                        var pass='Admin@321';
+                        $.ajax({
+                                type:"get",
+                                url:'https://enterprise.smsgupshup.com/GatewayAPI/rest',
+                                data:{userid:'2000153152', password:pass, send_to:jsonData.contact, method:'SendMessage',msg:msg2, msg_type:'TEXT', auth_scheme:'plain', v:'1.1', format:'text'},
+                                statusCode: {
+                                    200: function(response) {
+                                        alert('Message Sent Successfully');
+                                    }
+                                }
+                        });
+
+                        alert('Driver Details Updated');
                         
                     }
                     else
                     {     
-                        //alert('Error encountered. Cannot edit. Try again');
                         alert('Error');
                             
                     }
