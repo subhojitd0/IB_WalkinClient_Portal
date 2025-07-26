@@ -149,3 +149,27 @@
 	font-size: 16px;
 	color: rgba(255, 255, 255, 0.8);
 }
+
+.circle-icon {
+	display: inline-flex;
+	/* Use flexbox for easy centering */
+	justify-content: center;
+	/* Center horizontally */
+	align-items: center;
+	/* Center vertically */
+	width: 50px;
+	/* Set desired width for the circle */
+	height: 50px;
+	/* Set desired height for the circle (should match width for a perfect circle) */
+	background-color: #2eaf88;
+	/* Background color for the circle */
+	border-radius: 50%;
+	/* Creates the circular shape */
+	border: 1px solid black;
+	color: rgb(0, 0, 0);
+	/* Color of the icon */
+	font-size: 18px;
+	/* Size of the icon */
+	margin-left: -50%;
+	text-shadow: 2px 2px 4px #000000;
+}

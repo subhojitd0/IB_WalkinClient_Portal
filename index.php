@@ -21,6 +21,8 @@ require 'api/config.php';
 
 	<!-- Custom stlylesheet -->
 	<link type="text/css" rel="stylesheet" href="css/style.css" />
+	<link href="checkbooking/vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all">
+    <link href="checkbooking/vendor/font-awesome-5/css/fontawesome-all.min.css" rel="stylesheet" media="all">
 
 	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -151,16 +153,29 @@ require 'api/config.php';
 
 									<div class="col-xs-6 col-sm-6" id='costrow' name='costrow'>
 										<div class="form-group">
-											<span class="form-label">Approx Cost</br></span>
+											<span class="form-label">Minimum Cost</br></span>
 											<h4 id='cost' name='cost'></h4>
 										</div>
 									</div>
 									
 									
 								</div>
-								<div class="form-btn ">
-									<button type="submit" class="btn btn-info btn-lg btn-block"  id="bookbtn" name="bookbtn">Book Cabs</button>
+								
+												
+								<div class='row'>
+									
+									<div class="form-btn col-xs-10">
+										<button type="submit" class="btn btn-info btn-lg btn-block"  id="bookbtn" name="bookbtn">Book Cabs</button>
+									</div>
+									<div class="form-btn col-xs-2">
+										<a href='tel:+919830800776'>
+											<div class="circle-icon">
+												<i class="fa fa-phone"></i> <!-- Example using Font Awesome phone icon -->
+											</div>
+										</a>
+									</div>
 								</div>
+
 							</form>
 						</div>
 					</div>
@@ -450,6 +465,7 @@ require 'api/config.php';
 
 	});
    
+
 </script>
 
     
