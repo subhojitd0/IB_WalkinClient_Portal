@@ -39,15 +39,27 @@ require 'api/config.php';
 			<div class="container">
 				<div class="row">
 					<div class="col-md-7 col-md-push-5">
-						<div class="booking-cta">
+						<div class="booking-cta" id='imglogo'>
 							<img src="img/mainlogo.jpeg" width="150px"/>
-							<!-- <p>Kolkata,offers luxury transportation solutions. Renowned for its punctuality, comfort, and professional chauffeurs, IB Cabs ensures a seamless travel experience across the city.
-							</p> -->
 						</div>
 					</div>
 					<div class="col-md-4 col-md-pull-7">
 						<div class="booking-form">
-							<form action="api/bookcabs.php" method="POST">
+
+						<div class='modaltnc' id='modaltnc'>
+								<h4> Terms & Conditions</h4>
+								<p>
+									<ul>
+										<li>For Local Rentals, if exceeding the package hour or Kilometer, which ever will be higher will be considered. </li></br>
+										<li>Actual Toll and Parking charges to be added to the bill if applicable.</li></br>
+										<li>Night Charge of &#8377; 100 will be charged for duty hours after 11 pm & before 5 am.</li></br>
+										<li>Outstation Charge of &#8377; 500 / night is applicaple for Outstation duty</li></br>
+									</ul>
+
+									<button class='btn-lg btn-block btn btn-danger' id='modalbtnclose'>Close</button>
+								</p>
+						</div>
+							<form action="api/bookcabs.php" method="POST" id='bookingform'>
 								
 								<div class="form-group">
 									<span class="form-label">Need Car For </span>
@@ -161,6 +173,10 @@ require 'api/config.php';
 									
 								</div>
 								
+								<div class="form-btn">
+										<p class='tnc' id='tnc'> Read the Terms and Condition</p> 
+										
+								</div>
 												
 								<div class='row'>
 									
@@ -463,6 +479,24 @@ require 'api/config.php';
         	}
 		}
 
+	});
+
+	$('#modalbtnclose').click(function(){
+		$('#modaltnc').hide();
+		const bookingform = document.getElementById("bookingform");
+		const imglogo = document.getElementById("imglogo");
+		bookingform.classList.remove("formblur");
+		imglogo.classList.remove("formblur");
+		
+	});
+
+	$('#tnc').click(function(){
+		const bookingform = document.getElementById("bookingform");
+		const imglogo = document.getElementById("imglogo");
+		bookingform.classList.add("formblur");
+		imglogo.classList.add("formblur");
+		$('#modaltnc').show();
+		
 	});
    
 
