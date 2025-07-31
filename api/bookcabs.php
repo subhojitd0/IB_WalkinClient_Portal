@@ -3,6 +3,7 @@
 require 'config.php';
 
 $dutytype=$_POST['dutytype'];
+$flag=0;
 
 if($dutytype==1) //Airport Pickkup
 {
@@ -12,6 +13,11 @@ if($dutytype==1) //Airport Pickkup
 	$repdate=$_POST['date'];
 	$time=$_POST['time'];	
 	$vtype=$_POST['vtype'];
+
+	if($name=='' || $contact=='' || $drop=='' || $repdate=='' || $time=='' || $vtype=='' )
+	{
+		$flag=1;
+	}
 
 	$sql="INSERT INTO `ib_bookcabs`(`bookingid`, `name`, `contact`, `dutytype`, `package`, `location`, `reportdate`, `returndate`, `reporttime`, `cartype`, `status`) 
 	 	VALUES ('','$name','$contact','$dutytype','','$drop','$repdate','','$time','$vtype','0')";
@@ -24,6 +30,11 @@ else if($dutytype==2) //Airport Drop
 	$repdate=$_POST['date'];
 	$time=$_POST['time'];	
 	$vtype=$_POST['vtype'];
+
+	if($name=='' || $contact=='' || $pickup=='' || $repdate=='' || $time=='' || $vtype=='' )
+	{
+		$flag=1;
+	}
 
 	$sql="INSERT INTO `ib_bookcabs`(`bookingid`, `name`, `contact`, `dutytype`, `package`, `location`, `reportdate`, `returndate`, `reporttime`, `cartype`, `status`) 
 	 	VALUES ('','$name','$contact','$dutytype','','$pickup','$repdate','','$time','$vtype','0')";
@@ -38,6 +49,11 @@ else if($dutytype==3) //Local
 	$vtype=$_POST['vtype'];
 	$pickup=$_POST['pickup'];
 
+	if($name=='' || $contact=='' || $package=='' || $repdate=='' || $time=='' || $vtype=='' & $pickup=='' )
+	{
+		$flag=1;
+	}
+
 	$sql="INSERT INTO `ib_bookcabs`(`bookingid`, `name`, `contact`, `dutytype`, `package`, `location`, `reportdate`, `returndate`, `reporttime`, `cartype`, `status`) 
 	 	VALUES ('','$name','$contact','$dutytype','$package','$pickup','$repdate','','$time','$vtype','0')";
 }
@@ -51,23 +67,35 @@ else if($dutytype==4) //Outstation
 	$vtype=$_POST['vtype'];
 	$pickup=$_POST['pickup'];
 
+	if($name=='' || $contact=='' || $retdate=='' || $repdate=='' || $time=='' || $vtype=='' & $pickup=='' )
+	{
+		$flag=1;
+	}
+
 	$sql="INSERT INTO `ib_bookcabs`(`bookingid`, `name`, `contact`, `dutytype`, `package`, `location`, `reportdate`, `returndate`, `reporttime`, `cartype`, `status`) 
 	 	VALUES ('','$name','$contact','$dutytype','','$pickup','$repdate','$retdate','$time','$vtype','0')";
 }
 
-
-	if(mysqli_query($conn,$sql))
+	if($flag==1)
 	{
-	    $sqlid="Select max(bookingid) from `ib_bookcabs`";
-	    $result = mysqli_query($conn,$sqlid);
-	    $row = mysqli_fetch_array($result);
+		header('Location: ../index.php');
+	}
+	else
+	{
+		if(mysqli_query($conn,$sql))
+		{
+			$sqlid="Select max(bookingid) from `ib_bookcabs`";
+			$result = mysqli_query($conn,$sqlid);
+			$row = mysqli_fetch_array($result);
+		
+			header('Location: ../bookingconfirm.php?id='.$row[0]);
+				
+		}
+		else{
+			header('Location: bookingissue.php');
+		}
+	}
 	
-		header('Location: ../bookingconfirm.php?id='.$row[0]);
-			
-	}
-	else{
-		header('Location: bookingissue.php');
-	}
 
 
 ?>
